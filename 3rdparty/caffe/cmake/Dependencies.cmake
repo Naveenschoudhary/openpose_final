@@ -128,6 +128,13 @@ if(NOT APPLE)
     list(APPEND Caffe_LINKER_LIBS PUBLIC ${BLAS_LIBRARY} ${LAPACK_LIBRARY})
   endif()
 
+  # First, check for ATLAS CBLAS since it's common on Ubuntu
+  find_library(ATLAS_CBLAS_LIBRARY NAMES satlas tatlas atlas_r atlas)
+  if(ATLAS_CBLAS_LIBRARY)
+    message(STATUS "Found ATLAS CBLAS: ${ATLAS_CBLAS_LIBRARY}")
+    list(APPEND Caffe_LINKER_LIBS PUBLIC ${ATLAS_CBLAS_LIBRARY})
+  endif()
+
   if(BLAS STREQUAL "Atlas" OR BLAS STREQUAL "atlas")
     find_package(Atlas REQUIRED)
     list(APPEND Caffe_INCLUDE_DIRS PUBLIC ${Atlas_INCLUDE_DIR})

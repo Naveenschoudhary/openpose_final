@@ -21,7 +21,7 @@ find_path(OPENBLAS_INCLUDE_DIR
 )
 
 find_library(OPENBLAS_LIBRARY
-  NAMES openblas
+  NAMES openblas libopenblas openblas_omp openblas_thread
   PATHS
   /usr/lib
   /usr/lib/x86_64-linux-gnu
