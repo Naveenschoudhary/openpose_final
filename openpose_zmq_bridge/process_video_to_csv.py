@@ -15,7 +15,7 @@ import shutil
 
 # Add OpenPose Python module path
 dir_path = os.path.dirname(os.path.realpath(__file__))
-root_path = "/Users/naveenschoudhary/Developer/personal/openpose" 
+root_path = "/workspace/openpose_final" 
 
 # Hard-coded URL
 DEFAULT_VIDEO_URL = "https://dev1-admin-restapi.aim-football.com/images/dev1/videos/test_17471176153455714.mp4"

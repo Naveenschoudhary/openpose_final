@@ -114,8 +114,26 @@ endif()
 
 # ---[ BLAS
 if(NOT APPLE)
-  set(BLAS "Atlas" CACHE STRING "Selected BLAS library")
+  # Force OpenBLAS for Ubuntu systems
+  set(BLAS "Open" CACHE STRING "Selected BLAS library")
   set_property(CACHE BLAS PROPERTY STRINGS "Atlas;Open;MKL")
+
+  # Direct approach for Ubuntu - always add these libraries
+  find_library(BLAS_LIBRARY NAMES blas)
+  find_library(LAPACK_LIBRARY NAMES lapack)
+  
+  if(BLAS_LIBRARY AND LAPACK_LIBRARY)
+    message(STATUS "Found system BLAS: ${BLAS_LIBRARY}")
+    message(STATUS "Found system LAPACK: ${LAPACK_LIBRARY}")
+    list(APPEND Caffe_LINKER_LIBS PUBLIC ${BLAS_LIBRARY} ${LAPACK_LIBRARY})
+  endif()
+
+  # First, check for ATLAS CBLAS since it's common on Ubuntu
+  find_library(ATLAS_CBLAS_LIBRARY NAMES satlas tatlas atlas_r atlas)
+  if(ATLAS_CBLAS_LIBRARY)
+    message(STATUS "Found ATLAS CBLAS: ${ATLAS_CBLAS_LIBRARY}")
+    list(APPEND Caffe_LINKER_LIBS PUBLIC ${ATLAS_CBLAS_LIBRARY})
+  endif()
 
   if(BLAS STREQUAL "Atlas" OR BLAS STREQUAL "atlas")
     find_package(Atlas REQUIRED)
@@ -125,6 +143,13 @@ if(NOT APPLE)
     find_package(OpenBLAS REQUIRED)
     list(APPEND Caffe_INCLUDE_DIRS PUBLIC ${OpenBLAS_INCLUDE_DIR})
     list(APPEND Caffe_LINKER_LIBS PUBLIC ${OpenBLAS_LIB})
+    
+    # Find CBLAS directly
+    find_library(CBLAS_LIBRARY NAMES cblas)
+    if(CBLAS_LIBRARY)
+      message(STATUS "Found CBLAS: ${CBLAS_LIBRARY}")
+      list(APPEND Caffe_LINKER_LIBS PUBLIC ${CBLAS_LIBRARY})
+    endif()
   elseif(BLAS STREQUAL "MKL" OR BLAS STREQUAL "mkl")
     find_package(MKL REQUIRED)
     list(APPEND Caffe_INCLUDE_DIRS PUBLIC ${MKL_INCLUDE_DIR})

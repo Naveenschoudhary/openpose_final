@@ -9,7 +9,7 @@ from sys import platform
 
 # ---- Setup OpenPose Path ----
 try:
-    root_path = "/Users/naveenschoudhary/Developer/company/openpose"  # 👈 Change this to your OpenPose directory
+    root_path = "/workspace/openpose_final"  # 👈 Change this to your OpenPose directory
 
     # Windows
     if platform == "win32":

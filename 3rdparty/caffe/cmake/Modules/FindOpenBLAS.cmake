@@ -11,6 +11,9 @@ find_path(OPENBLAS_INCLUDE_DIR
   NAMES cblas.h
   PATHS
   /usr/include
+  /usr/include/openblas
+  /usr/include/x86_64-linux-gnu
+  /usr/include/x86_64-linux-gnu/openblas
   /usr/local/include
   /opt/homebrew/include
   /opt/homebrew/opt/openblas/include
@@ -18,15 +21,19 @@ find_path(OPENBLAS_INCLUDE_DIR
 )
 
 find_library(OPENBLAS_LIBRARY
-  NAMES openblas
+  NAMES openblas libopenblas openblas_omp openblas_thread
   PATHS
   /usr/lib
+  /usr/lib/x86_64-linux-gnu
+  /usr/lib/x86_64-linux-gnu/openblas-base
   /usr/local/lib
   /opt/homebrew/lib
   /opt/homebrew/opt/openblas/lib
   $ENV{OPENBLAS_HOME}/lib
 )
 
+# Set OpenBLAS_LIB for compatibility with old scripts
+set(OpenBLAS_LIB ${OPENBLAS_LIBRARY})
 set(OPENBLAS_LIBRARIES ${OPENBLAS_LIBRARY})
 set(OPENBLAS_INCLUDE_DIRS ${OPENBLAS_INCLUDE_DIR})
 
