@@ -1,0 +1,28 @@
+# TensorRT Environment Requirements
+# Install on Ubuntu/Linux with NVIDIA GPU support
+
+# Core dependencies
+onnx>=1.12.0
+onnxruntime-gpu>=1.13.0
+torch>=1.13.0
+torchvision>=0.14.0
+
+# Caffe dependencies for model conversion
+protobuf>=3.20.0
+numpy>=1.21.0
+opencv-python>=4.6.0
+
+# TensorRT (Install via NVIDIA package)
+# Download from: https://developer.nvidia.com/tensorrt
+# Or install via pip: nvidia-tensorrt
+
+# Additional tools
+pycuda>=2022.1
+tensorrt>=8.5.0  # This may need manual installation
+
+# Visualization and debugging
+matplotlib>=3.5.0
+pillow>=9.0.0
+
+# Model analysis
+netron>=6.0.0  # For visualizing models 
